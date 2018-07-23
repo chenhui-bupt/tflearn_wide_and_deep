@@ -82,11 +82,11 @@ class TFLearnWideAndDeep(object):
         Load data (use files offered in the Tensorflow wide_n_deep_tutorial)
         '''
         if not os.path.exists(train_dfn):
-            urllib.urlretrieve("https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data", train_dfn)
+            urllib.request.urlretrieve("https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data", train_dfn)
             print("Training data is downloaded to %s" % train_dfn)
 
         if not os.path.exists(test_dfn):
-            urllib.urlretrieve("https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.test", test_dfn)
+            urllib.request.urlretrieve("https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.test", test_dfn)
             print("Test data is downloaded to %s" % test_dfn)
 
         self.train_data = pd.read_csv(train_dfn, names=COLUMNS, skipinitialspace=True)
@@ -149,9 +149,9 @@ class TFLearnWideAndDeep(object):
             psize = tf.cast(tf.shape(pos)[0], tf.int64)
             nsize = tf.cast(tf.shape(neg)[0], tf.int64)
             true_positive = tf.reduce_sum(pos, name="true_positive")
-            false_negative = tf.sub(psize, true_positive, name="false_negative")
+            false_negative = tf.subtract(psize, true_positive, name="false_negative")
             false_positive = tf.reduce_sum(neg, name="false_positive")
-            true_negative = tf.sub(nsize, false_positive, name="true_negative")
+            true_negative = tf.subtract(nsize, false_positive, name="true_negative")
             overall_accuracy = tf.truediv(tf.add(true_positive, true_negative), tf.add(nsize, psize), name="overall_accuracy")
         vmset = [true_positive, true_negative, false_positive, false_negative, overall_accuracy]
 
